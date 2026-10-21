@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class LightController : MonoBehaviour
 {
@@ -10,11 +12,12 @@ public class LightController : MonoBehaviour
     [Header("Light使用対象Scene名")]
     [SerializeField] private string[] _hasLightSceneNames; //Light使用対象Scene名の配列
 
+
     private PlayerMove _playerMove;　//PlayerMoveコンポーネントを参照する変数
 
     void Start()
     {
-        _playerMove = GetComponent<PlayerMove>();　//変数playerMoveがPlayerのPlayerMoveコンポーネントを参照
+        _playerMove = GetComponent<PlayerMove>(); //変数playerMoveがPlayerのPlayerMoveコンポーネントを参照
 
         _isUseLight = false; //ライトの使用をいったんOFF
 
@@ -39,6 +42,24 @@ public class LightController : MonoBehaviour
             float currentAngleZ = _playerMove.GetAngle();　//現在のPlayer角度を取得
             // Player角度に合わせてライトを回転させる
             _lightObj.transform.localEulerAngles = new Vector3(0, 0, currentAngleZ + 90);
+
+            if (currentAngleZ >= -45 && currentAngleZ < 45)//右向き
+            {
+                _lightObj.transform.position = new Vector3(transform.position.x-0.05f,transform.position.y,1);
+            }
+            else if (currentAngleZ >= 45 && currentAngleZ <= 135)      // 上向き
+            {
+                _lightObj.transform.position = new Vector3(transform.position.x+0.25f, transform.position.y + 0.1f, 1);
+            }
+            else if (currentAngleZ >= -135 && currentAngleZ <= -45)    // 下向き
+            {
+                _lightObj.transform.position = new Vector3(transform.position.x-0.25f, transform.position.y + 0.1f, 1);
+            }
+            else// 左向き
+            {
+                _lightObj.transform.position = new Vector3(transform.position.x+0.05f, transform.position.y, 1);
+            }  
+            
         }
     }
 }

@@ -25,7 +25,7 @@ public class PlayerMove : MonoBehaviour
     public static float life = 1.0f;    // プレイヤーのライフ
     private bool _inDamage = false;              // ダメージ中フラグ
 
-    //private UIController _uiCnt;
+    private UIController _uiCnt;
 
     // Moveアクションを受け取る
     void OnMove(InputValue value)
@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour
         _rbody = GetComponent<Rigidbody2D>();    // PalyerのRigidbody2Dを変数rbodyで参照
         _animator = GetComponent<Animator>();    // PlayerのAnimatorを変数animatorで参照
 
-        //_uiCnt = GameObject.FindFirstObjectByType<UIController>();   // シーン中のUIController取得
+        _uiCnt = GameObject.FindFirstObjectByType<UIController>();   // シーン中のUIController取得
     }
 
     void Update()
@@ -130,7 +130,7 @@ public class PlayerMove : MonoBehaviour
         {
             life -= 0.25f; //ライフを減らす
             //ライフを更新
-            //_uiCnt.UpdateLife(PlayerMove.life);
+            _uiCnt.UpdateLife(PlayerMove.life);
 
             if (life > 0) //もしライフが残っていれば
             {
