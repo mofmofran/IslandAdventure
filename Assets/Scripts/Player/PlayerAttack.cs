@@ -76,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
             _uiCnt.UpdateItemCount(ItemType.arrow, ItemKeeper.hasArrows);    	                // 矢を更新
             _uiCnt.UpdatePower(0);                                                  // パワーを更新
 
-            //SoundManager.soundManager.SEPlay(SEType.Shoot);     // SE再生（矢を射る）
+            SoundManager.soundManager.SEPlay(SEType.Shoot);     // SE再生（矢を射る）
 
             _arrowAttackCoroutine = StartCoroutine(ArrowAttack());//(ArrowAtack)コルーチンを発動して、その情報を変数に入れる
         }

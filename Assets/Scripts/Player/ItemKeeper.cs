@@ -3,14 +3,15 @@ using UnityEngine;
 public class ItemKeeper : MonoBehaviour
 {
     public static float hasKeys = 0.0f;
-    public static float hasArrows = 1.0f;
+    public static float hasArrows = 100.0f;
 
     private UIController _uiCnt;
 
     void Start()
     {
         _uiCnt = GameObject.FindFirstObjectByType<UIController>();   // シーン中のUIController取得
-        hasArrows = 100f;
+        if(hasArrows<100f)hasArrows = 100f;
+        _uiCnt.UpdateItemCount(ItemType.arrow, hasArrows);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -18,9 +19,9 @@ public class ItemKeeper : MonoBehaviour
         if (collision.gameObject.tag == "Item")
         {
             ItemData item = collision.gameObject.GetComponent<ItemData>();
-            //    SaveDataManager.SetUsed(item.id);   // 取ったことを記録
+                SaveDataManager.SetUsed(item.id);   // 取ったことを記録
 
-                if (item.itemType == ItemType.arrow)
+            if (item.itemType == ItemType.arrow)
             {
                 hasArrows += item.value;
                 _uiCnt.UpdateItemCount(ItemType.arrow, hasArrows);
@@ -47,6 +48,7 @@ public class ItemKeeper : MonoBehaviour
             rbody.gravityScale = 2.5f;
             rbody.AddForce(new Vector2(0, 6), ForceMode2D.Impulse);
             Destroy(collision.gameObject, 0.5f);
+            SoundManager.soundManager.SEPlay(SEType.ItemGet);
         }
     }
 }

@@ -5,19 +5,19 @@ public class ItemBox : MonoBehaviour
 {
     [SerializeField] private Sprite _openImage;
     [SerializeField] private GameObject _itemprefab;
-    private bool _isClosed = true;
+    private bool _isClosed = true;//trueの時は閉じていてfalseの時は開いている
     private string _id;     // セーブ用のID
 
     void Start()
     {
         // すでに開けた箱なら開いた状態にする
-        //_id = SaveDataManager.MakeId(gameObject);
-        //if (SaveDataManager.IsUsed(_id))
-        //{
-        //    GetComponent<SpriteRenderer>().sprite = _openImage;
-        //    _isClosed = false;
-        //    SpawnItem();    // 中身をまだ取っていなければもう一度出す
-        //}
+        _id = SaveDataManager.MakeId(gameObject);
+        if (SaveDataManager.IsUsed(_id))
+        {
+            GetComponent<SpriteRenderer>().sprite = _openImage;
+            _isClosed = false;
+            SpawnItem();    // 中身をまだ取っていなければもう一度出す
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,7 +26,7 @@ public class ItemBox : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = _openImage;
             _isClosed = false;
-            //SaveDataManager.SetUsed(_id);   // 開けたことを記録
+            SaveDataManager.SetUsed(_id);   // 開けたことを記録
             SpawnItem();
         }
     }
@@ -37,7 +37,7 @@ public class ItemBox : MonoBehaviour
         if(_itemprefab == null) return;
 
         string itemId = _id + "_Item";  // 箱から出るアイテムは箱のIDをもとにする
-        //if (SaveDataManager.IsUsed(itemId)) return;     // すでに取っていれば出さない
+        if (SaveDataManager.IsUsed(itemId)) return;     // すでに取っていれば出さない
 
         GameObject itemObj = Instantiate(_itemprefab, transform.position, Quaternion.identity);
         itemObj.GetComponent<ItemData>().id = itemId;

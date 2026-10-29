@@ -18,15 +18,15 @@ public class ItemData : MonoBehaviour
     void Start()
     {
         // ItemBoxから出たアイテムはIDが設定済み。シーンに置いたアイテムはここで作る
-        //if (id == "")
-        //{
-        //    id = SaveDataManager.MakeId(gameObject);
-        //}
+        if (id == "")
+        {
+            id = SaveDataManager.MakeId(gameObject);
+        }
 
-        //// すでに取ったアイテムなら消す
-        //if (SaveDataManager.IsUsed(id))
-        //{
-        //    Destroy(gameObject);
-        //}
+        // すでに取ったアイテムなら消す
+        if (SaveDataManager.IsUsed(id))
+        {
+            Destroy(gameObject);
+        }
     }
 }

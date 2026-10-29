@@ -129,6 +129,8 @@ public class PlayerMove : MonoBehaviour
         if (GameManager.gameState == GameState.InGame)
         {
             life -= 0.25f; //ライフを減らす
+
+            SoundManager.soundManager.SEPlay(SEType.GetDamage);
             //ライフを更新
             _uiCnt.UpdateLife(PlayerMove.life);
 
@@ -145,6 +147,8 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
+
+              
                 GameOver();　//体力がなければゲームオーバー
             }
         }
@@ -175,7 +179,11 @@ public class PlayerMove : MonoBehaviour
         input.SwitchCurrentActionMap("UI");                     // アクションマップをUIに変更
         input.currentActionMap.Enable();                        // UIマップ有効化
 
+        SoundManager.soundManager.StopBgm();
+        SoundManager.soundManager.SEPlay(SEType.GameOver);
+
         Invoke("PlayerGravityEnd", 2.0f); //アニメーション演出が終わるころ落下は停止
+
     }
 
     void PlayerGravityEnd()

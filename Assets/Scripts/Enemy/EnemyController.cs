@@ -164,6 +164,8 @@ public class EnemyController : MonoBehaviour
             _rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
             _animator.SetTrigger("IsDead");
             Destroy(gameObject, 1.0f);
+            SoundManager.soundManager.SEPlay(SEType.EnemyKilled);
+
         }
     }
 
